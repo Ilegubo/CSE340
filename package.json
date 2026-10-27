@@ -1,0 +1,32 @@
+{
+  "name": "cse340",
+  "version": "1.0.0",
+  "description": "Backend web development coursework for CSE 340 at BYU, covering server-side architecture, RESTful APIs, database integration, application logic, and software engineering best practices.",
+  "keywords": [
+    "CSE340"
+  ],
+  "homepage": "https://github.com/Ilegubo/CSE340#readme",
+  "bugs": {
+    "url": "https://github.com/Ilegubo/CSE340/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ilegubo/CSE340.git"
+  },
+  "license": "ISC",
+  "author": "Ilegubo",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "^7.0.2",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
