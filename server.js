@@ -34,6 +34,11 @@ app.get('/projects', (req, res) => {
     const title = templateView.toUpperCase();
     res.render(templateView, {title});
 });
+app.get('/categories', (req, res) => {
+    const templateView = 'categories';
+    const title =templateView.toUpperCase;
+    res.render(templateView, {title})
+})
 
 //set EJS as the templating engine
 app.set('view engine', 'ejs');
