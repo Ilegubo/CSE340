@@ -1,6 +1,9 @@
 import express from 'express';
 import {fileURLToPath} from 'url';
-import path from 'path'
+import path from 'path';
+import { testConnection } from './src/models/db.js';
+import { getAllOrganizations } from './src/models/organizations.js';
+
 
 //Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -24,10 +27,13 @@ app.get('/', async (req, res) => {
     const title = templateView.toUpperCase();
     res.render(templateView, {title});
 })
-app.get('/organizations', (req, res) => {
+app.get('/organizations', async(req, res) => {
+    const organizations = await getAllOrganizations();
+    console.log(organizations);
+    
     const templateView  = 'organizations';
     const title = templateView.toUpperCase();
-    res.render(templateView, {title});
+    res.render(templateView, {title, organizations});  
 });
 app.get('/projects', (req, res) => {
     const templateView  = 'projects';
@@ -36,7 +42,7 @@ app.get('/projects', (req, res) => {
 });
 app.get('/categories', (req, res) => {
     const templateView = 'categories';
-    const title =templateView.toUpperCase;
+    const title =templateView.toUpperCase();
     res.render(templateView, {title})
 })
 
@@ -46,7 +52,18 @@ app.set('view engine', 'ejs');
 //Tell Express wehre to find you templates
 app.set('views', path.join(__dirname, 'src/views'))
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
+
+  try {
+    await testConnection();
+
+    console.log(`\nServer is running at http://127.0.0.1:${PORT}`);
+    console.log('='.repeat(42));
     console.log(`Server is running at http://localhost:${PORT}`);
     console.log(`Environment: ${NODE_ENV}`);
-})
+
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+  }
+});
