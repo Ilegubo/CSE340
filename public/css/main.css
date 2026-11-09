@@ -211,7 +211,7 @@ main > p {
     --category-text: #214a33;
 }
 
-.category-list li.category-card--educational {
+.category-list li.category-card--education {
     --category-accent: #28577d;
     --category-background: #eef4fa;
     --category-text: #234b6b;

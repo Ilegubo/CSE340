@@ -21,7 +21,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "start": "node server.js",
-    "lint:ejs": "ejslint views/**/*.ejs"
+    "lint:ejs": "ejslint src/views/**/*.ejs"
   },
   "dependencies": {
     "ejs": "^7.0.2",
