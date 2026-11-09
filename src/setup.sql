@@ -34,8 +34,6 @@ CREATE TABLE projects (
 
 INSERT INTO projects (organization_id, title, description, location, date)
 VALUES
-   INSERT INTO projects (organization_id, title, description, location, date)
-VALUES
     -- BrightFuture Builders, Organization 1
     (1, 'Akwatia Street Health Outreach', 'Hosting a free HIV and health screening drive for residents around Akwatia Line.', 'Akwatia Line, Kumasi', '2026-10-19'),
     (1, 'Jamestown Shelter & Support', 'Helping vulnerable families secure basic housing materials and minor home repairs.', 'Jamestown, Accra', '2026-10-28'),
