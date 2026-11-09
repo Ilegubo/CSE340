@@ -1,11 +1,14 @@
 <%- include('partials/header') %>
 
-<main>
-    <ul>
-        <li>Environmental</li>
-        <li>Educational</li>
-        <li>Community Service</li>
-        <li>Health and Wellness</li>
-    </ul>
-</main>
-<%- include('partials/footer') %>
+    <main id="main-content" tabindex="-1">
+        <h1>
+            <%= title %>
+        </h1>
+        <p>Explore service opportunities by the kind of work that matters to you.</p>
+        <ul class="category-list">
+            <% categories.forEach(category=> { %>
+                <li class="category-card--<%= category.name.toLowerCase() %>"><%= category.name %></li>
+                <%})%>
+        </ul>
+    </main>
+    <%- include('partials/footer') %>

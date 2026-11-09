@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title><%= title %> | CSE 340 Service Network</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <nav>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+    <nav class="site-nav" aria-label="Primary">
+        <a class="site-brand" href="/">CSE 340<br>Service Network</a>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/categories">Categories</a></li>
+            <li><a href="/" <% if (title === 'HOME') { %>aria-current="page"<% } %>>Home</a></li>
+            <li><a href="/organizations" <% if (title === 'ORGANIZATIONS') { %>aria-current="page"<% } %>>Organizations</a></li>
+            <li><a href="/projects" <% if (title === 'PROJECTS') { %>aria-current="page"<% } %>>Projects</a></li>
+            <li><a href="/categories" <% if (title === 'CATEGORIES') { %>aria-current="page"<% } %>>Categories</a></li>
         </ul>
     </nav>
+    </header>

@@ -1,13 +1,20 @@
 <%- include('partials/header') %>
 
-    <main>
-        <h1>Projects</h1>
-        <h2>Upcoming Service Projects</h2>
-<ul>
-    <li>Park Cleanup - Join us to clean up local parks and make them beautiful!</li>
-    <li>Food Drive - Help collect and distribute food to those in need.</li>
-    <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
-</ul>
-    </main>
+<main id="main-content" tabindex="-1">
+    <h1><%= title %></h1>
+    <p>Find a hands-on way to support communities through an upcoming service project.</p>
+    <ul class="project-list">
+        <% projects.forEach(project => { %>
+            <li>
+                <div class="project-meta">
+                    <time datetime="<%= project.date %>"><%= project.date %></time>
+                    <% if (project.location) { %><span><%= project.location %></span><% } %>
+                </div>
+                <h2><%= project.title %></h2>
+                <% if (project.description) { %><p><%= project.description %></p><% } %>
+            </li>
+        <% }) %>
+    </ul>
+</main>
 
 <%- include('partials/footer') %>

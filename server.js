@@ -3,6 +3,8 @@ import {fileURLToPath} from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
 import { getAllOrganizations } from './src/models/organizations.js';
+import {getAllProjects} from './src/models/projects.js';
+import { getAllCategories } from './src/models/categories.js';
 
 
 //Define the application environment
@@ -22,11 +24,13 @@ const app = express();
 // Serve dynamic ejs files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Home page
 app.get('/', async (req, res) => {
     const templateView  = 'home';
     const title = templateView.toUpperCase();
     res.render(templateView, {title});
 })
+// Organizations page
 app.get('/organizations', async(req, res) => {
     const organizations = await getAllOrganizations();
     console.log(organizations);
@@ -35,15 +39,21 @@ app.get('/organizations', async(req, res) => {
     const title = templateView.toUpperCase();
     res.render(templateView, {title, organizations});  
 });
-app.get('/projects', (req, res) => {
+// Projects Page
+app.get('/projects', async (req, res) => {
     const templateView  = 'projects';
     const title = templateView.toUpperCase();
-    res.render(templateView, {title});
+    const projects = await getAllProjects();
+    console.log(projects);
+    res.render(templateView, {title, projects});
 });
-app.get('/categories', (req, res) => {
+// Categories Page
+app.get('/categories', async (req, res) => {
     const templateView = 'categories';
     const title =templateView.toUpperCase();
-    res.render(templateView, {title})
+    const categories = await getAllCategories();
+    console.log(categories);
+    res.render(templateView, {title, categories});
 })
 
 //set EJS as the templating engine
@@ -57,11 +67,10 @@ app.listen(PORT, async () => {
 
   try {
     await testConnection();
-
-    console.log(`\nServer is running at http://127.0.0.1:${PORT}`);
     console.log('='.repeat(42));
     console.log(`Server is running at http://localhost:${PORT}`);
     console.log(`Environment: ${NODE_ENV}`);
+    console.log('='.repeat(42));
 
   } catch (error) {
     console.error('Error connecting to the database:', error);
