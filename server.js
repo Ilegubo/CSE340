@@ -1,4 +1,4 @@
-import os from 'os';
+// import os from 'os';
 import express from 'express';
 import {fileURLToPath} from 'url';
 import path from 'path';
@@ -64,7 +64,7 @@ app.set('view engine', 'ejs');
 //Tell Express wehre to find you templates
 app.set('views', path.join(__dirname, 'src/views'))
 
-/*app.listen(PORT, HOST, async () => {
+/app.listen(PORT, async () => {
   process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
 
   try {
@@ -78,23 +78,24 @@ app.set('views', path.join(__dirname, 'src/views'))
   } catch (error) {
     console.error('Error connecting to the database:', error);
   }
-});*/
+});
 
 
-app.listen(PORT, HOST, async () => {
+/*app.listen(PORT, HOST, async () => {
   process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
 
   try {
     await testConnection();
 
-    // Node.js v18+ uses family: 4 instead of 'IPv4', so this handles both
+    
     const localIP = Object.values(os.networkInterfaces())
       .flat()
       .find(i => (i.family === 'IPv4' || i.family === 4) && !i.internal)?.address;
+      
 
     console.log('='.repeat(42));
     console.log(`Server is running at http://localhost:${PORT}`);
-    console.log(`Server is running at http://${localIP}:${PORT}`); // Fixed typo here
+    // console.log(`Server is running at http://${localIP}:${PORT}`);
     console.log(`Environment: ${NODE_ENV}`);
     console.log('='.repeat(42));
 
@@ -102,3 +103,4 @@ app.listen(PORT, HOST, async () => {
     console.error('Error connecting to the database:', error);
   }
 });
+*/
