@@ -1,5 +1,8 @@
     <footer class="site-footer">
         <p>&copy; <%= new Date().getFullYear() %> CSE 340 Service Network.</p>
+        <% if (NODE_ENV === 'development') { %>
+            <p>Development Environment</p>
+        <%}%>
     </footer>
 </body>
 </html>
