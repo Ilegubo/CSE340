@@ -73,7 +73,7 @@ app.use ((err, req, res, next) => {
 
 
 app.listen(PORT, HOST, async () => {
-  // process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
+  process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
 
   try {
     await testConnection();

@@ -12,6 +12,7 @@
                 <h2><%= organization.name %></h2>
                 <p><%= organization.description %></p>
                 <a href="mailto:<%= organization.contact_email %>"><%= organization.contact_email %></a>
+                <br><br><a class="organization-details" href="/organization/<%= organization.organization_id %>">More Info Here &rarr;</a>
             </div>
         </li>
     <% }); %>

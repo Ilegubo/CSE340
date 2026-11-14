@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <h2><%= organizationDetails.name %></h2>
+    <img src="/images/<%= organizationDetails.logo_filename %>" alt="<%= organizationDetails.name %> logo">
+
+    <p>Description: <%= organizationDetails.description %></p>
+
+    <h3>Service Projects</h3>
+    <br>
+    <!-- <ul>
+        <% projects.forEach(project => { %>
+            <li><a href="/project/<%= project.project_id %>"><%= project.title %></a></li>
+        <% }) %>
+    </ul> -->
+    <ul class="project-list">
+        <% projects.forEach(project => { %>
+            <li>
+                <div class="project-meta">
+                    <time datetime="<%= project.date %>"><%= project.date %></time>
+                    <% if (project.location) { %><span><%= project.location %></span><% } %>
+                </div>
+                <h2><%= project.title %></h2>
+                <% if (project.description) { %><p><%= project.description %></p><% } %>
+            </li>
+        <% }) %>
+    </ul>
+</main>
+<%- include('partials/footer') %>
