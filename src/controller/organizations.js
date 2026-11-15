@@ -13,7 +13,7 @@ const showOrganizationsPage = async(req, res) => {
 };
 
 const showOrganizationDetailsPage = async(req, res) => {
-    const organizationId = 1//parseInt(req.params.id);
+    const organizationId = parseInt(req.params.id);
     const organizationDetails = await getOrganizationDetails(organizationId);
     const projects = await getProjectsByOrganizationId(organizationId)
 

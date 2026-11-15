@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+    <main id="main-content" tabindex="-1">
+        <h1><%= title %></h1>
+        <p>Project</p>
+        <ul class="project-list">
+            <% projectDetails.forEach(property => { %>
+                <li>
+                    <div class="project-meta">
+                        <time datetime="<%= property.date %>"><%= property.date %></time>
+                        <% if (property.location) { %><span><%= property.location %></span><% } %>
+                    </div>
+                    <h2><%= property.title %></h2>
+                    <p><%= property.description %></p>
+                    <a class="details-link" href="/projects %>">&larr; Go back</a>
+                </li>
+            <% }) %>
+        </ul>
+    </main>
+<%- include('partials/footer') %>
+
+

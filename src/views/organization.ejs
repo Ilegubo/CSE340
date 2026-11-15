@@ -9,12 +9,8 @@
 
     <h3>Service Projects</h3>
     <br>
-    <!-- <ul>
-        <% projects.forEach(project => { %>
-            <li><a href="/project/<%= project.project_id %>"><%= project.title %></a></li>
-        <% }) %>
-    </ul> -->
     <ul class="project-list">
+        <a class="details-link" href="organizations.ejs">&larr; Go Back</a>
         <% projects.forEach(project => { %>
             <li>
                 <div class="project-meta">
@@ -22,7 +18,9 @@
                     <% if (project.location) { %><span><%= project.location %></span><% } %>
                 </div>
                 <h2><%= project.title %></h2>
-                <% if (project.description) { %><p><%= project.description %></p><% } %>
+                <p><%= project.description %></p>
+                <p class="category-card--<%= project.category.toLowerCase() %>"><%= project.category %></p>
+                
             </li>
         <% }) %>
     </ul>

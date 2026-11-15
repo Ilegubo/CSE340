@@ -2,7 +2,7 @@
 
 <main id="main-content" tabindex="-1">
     <h1><%= title %></h1>
-    <p>Find a hands-on way to support communities through an upcoming service project.</p>
+    <h2>UPCOMING SERVICE PROJECTS</h2>
     <ul class="project-list">
         <% projects.forEach(project => { %>
             <li>
@@ -11,7 +11,8 @@
                     <% if (project.location) { %><span><%= project.location %></span><% } %>
                 </div>
                 <h2><%= project.title %></h2>
-                <% if (project.description) { %><p><%= project.description %></p><% } %>
+                <p><%= project.description %></p>
+                <a class="details-link" href="/project/<%= project.project_id %>">More Info &rarr;</a>
             </li>
         <% }) %>
     </ul>

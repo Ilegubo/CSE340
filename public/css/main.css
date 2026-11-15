@@ -206,7 +206,7 @@ main > p {
     font-weight: 700;
 }
 
-.category-list li.category-card--environmental {
+.category-list li.category-card--environment {
     --category-accent: #285c3e;
     --category-background: #edf5ef;
     --category-text: #214a33;
@@ -296,7 +296,7 @@ main > p {
     font-size: 14px;
 }
 
-a.organization-details {
+a.details-link {
     text-decoration: none;
     font-weight: bold;
     color: #3667a6;
