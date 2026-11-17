@@ -1,0 +1,20 @@
+{
+    "workbench.editor.customLabels.enabled": true,
+    "workbench.editor.customLabels.patterns": {
+        "*/src/views/project.ejs": "p",
+        "*/src/views/categories.ejs": "cS",
+        "*/src/views/organization.ejs": "o",
+        "*/src/models/categories.js": "catS",
+        "*/src/models/organizations.js": "orgS",
+        "*/public/css/main.css": "css",
+        "*/src/models/projects.js": "proS",
+        "*/src/routes.js": "RTS",
+        "*/src/models/db.js": "db",
+        "*/src/views/category.ejs": "c",
+        "*/src/controller/categories.js": "catJS",
+        "*/src/controller/projects.js": "proJS",
+        "*/src/controller/organizations.js": "orgJs",
+        "*/src/views/projects.ejs": "pS",
+        "*/src/views/organizations.ejs": "oS"
+    }
+}

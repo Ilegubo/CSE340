@@ -39,18 +39,19 @@ app.use((req, res, next) => {
   res.locals.NODE_ENV = NODE_ENV;
   next();
   }
-)
+);
 
 app.use(router);
 
 // Test route for 500 errors
 
-//Catch all route 404 errors
+//Create route to CATCH all route 404 errors
 app.use((req, res, next) => {
   const err = new Error('Page Not Found');
   err.status = 404;
   next(err);
-})
+});
+
 //Global error handler
 app.use ((err, req, res, next) => {
   //Log error details for debugging

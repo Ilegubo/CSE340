@@ -13,9 +13,9 @@
         <a class="site-brand" href="/">CSE 340<br>Service Network</a>
         <ul>
             <li><a href="/" <% if (title === 'HOME') { %>aria-current="page"<% } %>>Home</a></li>
-            <li><a href="/organizations" <% if (title === 'ORGANIZATIONS') { %>aria-current="page"<% } %>>Organizations</a></li>
-            <li><a href="/projects" <% if (title === 'PROJECTS') { %>aria-current="page"<% } %>>Projects</a></li>
-            <li><a href="/categories" <% if (title === 'CATEGORIES') { %>aria-current="page"<% } %>>Categories</a></li>
+            <li><a href="/organizations" <% if (title === 'ORGANIZATIONS' || title === 'ORGANIZATION DETAILS') { %>aria-current="page"<% } %>>Organizations</a></li>
+            <li><a href="/projects" <% if (title === 'PROJECTS' || title === 'PROJECT DETAILS'  || title === 'UPCOMING SERVICE PROJECTS') { %>aria-current="page"<% } %>>Projects</a></li>
+            <li><a href="/categories" <% if (title === 'CATEGORIES' || title === 'CATEGORY DETAILS') { %>aria-current="page"<% } %>>Categories</a></li>
         </ul>
     </nav>
     </header>

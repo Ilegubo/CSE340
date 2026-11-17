@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<main id="main-content" tabindex="-1">
+    <h1><%= title %></h1>
+    <ul class="project-list">
+        <a class="details-link" href="javascript:histotry.back()%>">&larr; Go back</a>
+        <% categoryDetails.forEach(project => { %>
+            <li>
+                <!-- <div class="project-meta">
+                    <time datetime="<%= project.date %>"><%= project.date %></time>
+                    <span><%= project.location %></span>
+                </div> -->
+                <a class="no-styling-link" href="/project/<%= project.project_id %>"><p><%= project.title %><span>&rarr;</span></p></a>
+                <!-- <p><%= project.description %></p> -->
+            </li>
+        <% }) %>
+    </ul>
+</main>
+
+<%- include('partials/footer') %>

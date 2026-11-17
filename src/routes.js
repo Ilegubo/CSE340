@@ -2,7 +2,7 @@ import express from 'express';
 
 import {showHomePage} from './controller/index.js';
 import {showOrganizationDetailsPage, showOrganizationsPage} from './controller/organizations.js'
-import { showCategoriesPage } from './controller/cateogories.js';
+import { showCategoriesPage, showCategoryDetailsPage } from './controller/categories.js';
 import { showUpcomingProjectsPage, showProjectDetailsPage } from './controller/projects.js';
 import { showTestErrorPage } from './controller/errors.js';
 
@@ -16,5 +16,5 @@ router.get('/projects', showUpcomingProjectsPage);
 router.get('/test-error', showTestErrorPage);
 router.get('/organization/:id', showOrganizationDetailsPage);
 router.get('/project/:id', showProjectDetailsPage);
-
+router.get('/category/:id', showCategoryDetailsPage);
 export default router;

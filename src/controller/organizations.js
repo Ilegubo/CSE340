@@ -15,16 +15,16 @@ const showOrganizationsPage = async(req, res) => {
 const showOrganizationDetailsPage = async(req, res) => {
     const organizationId = parseInt(req.params.id);
     const organizationDetails = await getOrganizationDetails(organizationId);
-    const projects = await getProjectsByOrganizationId(organizationId)
+    const projects = await getProjectsByOrganizationId(organizationId);
 
     //For debugging
     if (NODE_ENV === 'development') {
         console.log(organizationDetails)
         projects.forEach(project => console.log(project));
-    }
+    };
 
     const templateView = 'organization';
-    const title = 'Organization Details';
+    const title = 'ORGANIZATION DETAILS';
 
     res.render(templateView, {title, organizationDetails, projects});
 }

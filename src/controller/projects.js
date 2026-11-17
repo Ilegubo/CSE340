@@ -13,7 +13,7 @@ const showUpcomingProjectsPage = async(req, res) => {
 
 const showProjectDetailsPage = async (req, res) => {
     const templateView = 'project';
-    const title = 'Project Details';
+    const title = 'PROJECT DETAILS';
     const projectId = parseInt(req.params.id);
     const projectDetails = await getProjectDetails(projectId);
     //log projectDetails to console in development mode
