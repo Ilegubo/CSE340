@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
     <main id="main-content" tabindex="-1">
+        <h1><%= title %></h1>
         <ul class="project-list">
             <% projectDetails.forEach(property => { %>
-                <h1><%= title %></h1>
                 <li>
                     <div class="project-meta">
                         <time datetime="<%= property.date %>"><%= property.date %></time>

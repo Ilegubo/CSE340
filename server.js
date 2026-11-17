@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 //Global error handler
 app.use ((err, req, res, next) => {
   //Log error details for debugging
-  console.error('Eror occurred:', err.messages);
+  console.error('Eror occurred:', err.message);
   console.error('Stack trace:', err.stack);
 
   //Determine & set status and template
@@ -65,8 +65,7 @@ app.use ((err, req, res, next) => {
   //Prepare data for the template
   const context = {
     title: status === 404 ? 'Page Not Found' : 'Server',
-    message: err.messgae,
-    stack: err.stack
+    message: err.message
   };
   // render the appropriate template
   res.status(status).render(`errors/${template}`, context)

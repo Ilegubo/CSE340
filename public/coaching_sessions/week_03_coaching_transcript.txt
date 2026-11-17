@@ -1,0 +1,291 @@
+WEEK 03 COACHING SESSION — TRANSCRIPT
+Date: 17 November 2026
+Note: This transcript records the coaching exchange, including the code shared and the follow-up discussion.
+
+USER — SESSION INSTRUCTIONS
+Role: Supportive, non-judgmental Learning Coach and Software Mentor. Learning activity, not a test. Ask only one question at a time. Cover Models, Views, Controllers and Error Handling, including non-trivial code. Save the conversation as a downloadable .txt transcript at the end.
+
+ASSISTANT
+I'm your Learning Coach and Software Mentor for the Week 03 coaching session.
+Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say 'I don't know' or 'I made a mistake.' That's the fastest way we'll learn today.
+We'll work through four topics: Models, Views, Controllers, and Error Handling, discussing your code and the reasoning behind your decisions.
+I'll ask one question at a time, and at the end, we'll prepare a downloadable .txt transcript of the session.
+Topic 1 of 4: Models
+Question 1: Can you paste a model function from your assignment that accepts a parameter and uses it in an SQL query?
+
+USER
+const getProjectsByCategoryId = async(categoryId) => {
+    const query =   `SELECT categories.name AS category_name, projects.title, projects.project_id
+        FROM categories
+        JOIN project_categories
+        ON categories.category_id = project_categories.category_id
+        JOIN projects
+        ON projects.project_id = project_categories.project_id
+        WHERE categories.category_id = $1;`;
+
+    const queryParam = [categoryId];
+    const result = await db.query(query, queryParam);
+
+    return result.rows;
+};
+
+ASSISTANT
+Good. Your model function demonstrates asynchronous database queries, parameterized SQL, and table joins.
+Question 2: Why did you use $1 in your SQL query instead of inserting categoryId directly into the query string?
+
+USER
+That's a place holder. It allows be to use the db.query() function that safely replaces the place holder the the provided data and treats that data only as a string, not as an executable. All this is done to prevent sql injection attacks
+
+ASSISTANT
+Correct! You've explained the security benefit well.
+One small correction: Parameterized queries don't necessarily treat every value as a string. PostgreSQL handles the supplied value according to its expected data type.
+The important point is that SQL commands and user-supplied values are handled separately, preventing the values from being interpreted as SQL instructions.
+Question 3: Why did you use two JOIN operations in your query instead of retrieving the projects directly from the projects table?
+
+USER
+I used JOIN operations because I needed to retrieve info from categories and projects tables. These are two tables so I needed to use the JOIN operator.
+
+ASSISTANT
+That's correct, but there's an important detail.
+You used two JOINs to connect three tables:
+1. categories — contains category information.
+2. project_categories — connects projects to their categories.
+3. projects — contains project information.
+The project_categories table is necessary because your database supports a many-to-many relationship between projects and categories.
+Question 4: Can you explain why you created the project_categories junction table instead of adding a category_id column directly to the projects table?
+
+USER
+I created the project_categories junction table so that I best cater for the m:n relationship between projects and categories. This will prevent duplicate info in my database.
+
+ASSISTANT
+Correct! A junction table allows:
+- One project to belong to multiple categories.
+- One category to contain multiple projects.
+- Relationships to be stored without unnecessarily duplicating project or category records.
+That completes Topic 1: Models.
+Topic 2 of 4: Views (EJS)
+Question 5: Can you paste a non-trivial EJS snippet from your assignment that dynamically inserts data into an HTML link (href)?
+
+USER
+<%- include('partials/header') %>
+<main id="main-content" tabindex="-1">
+    <ul class="project-list">
+        <% projectDetails.forEach(property => { %>
+            <h1><%= title %></h1>
+            <li>
+                <div class="project-meta">
+                    <time datetime="<%= property.date %>"><%= property.date %></time>
+                    <span><a href="/organization/<%=property.organization_id %>" class="project-organization"><%= property.organization_name %></a></span>
+                    <!-- <span><%= property.location %></span> -->
+                </div>
+                <h2><%= property.title %></h2>
+                <p><%= property.description %></p>
+                <p><span class="tag">Location:</span> <%= property.location %></p>
+                <p><span class="tag">Category:</span><a class="no-styling-link" href="/category/<%= property.category_id %>"><%= property.category_name %><span>&rarr;</span></a></p>
+                <br>
+                <p><a class="details-link" href="javascript:history.back()">&larr; Go back</a></p>
+            </li>
+        <% }) %>
+    </ul>
+</main>
+<%- include('partials/footer') %>
+
+ASSISTANT
+Your EJS snippet demonstrates several important concepts:
+- Partials: Reusing the header and footer.
+- Iteration: Using forEach() to render project details.
+- Dynamic links: Inserting organization and category IDs into URLs.
+- Escaping: Using <%= to safely output dynamic values.
+- Navigation: Using history.back() to return to the previous page.
+One observation: Your <h1> is inside the forEach() loop, meaning it will repeat for every item in projectDetails.
+Question 6: Consider this line:
+<a href="/organization/<%= property.organization_id %>"><%= property.organization_name %></a>
+Can you explain what happens when EJS renders this link and how Express uses the resulting URL when someone clicks it?
+
+USER
+the header has been updated so that I doesn't repeat for every iteration.
+I do not know what you expert me to say about what happens when ejs renders the link. However, when someone clicks the link, I have designed my application to treat the organization_id as a route parameter. I convert that route parameter to int and the controller passes it to the model function which appends it to the where clause of its database query.
+Now would you have expected me to say about what happens when ejs renders the link
+
+ASSISTANT
+Your explanation of what happens after clicking the link is correct.
+What I expected regarding EJS rendering was simply this:
+1. EJS evaluates <%= property.organization_id %> and <%= property.organization_name %>.
+2. It replaces those expressions with their actual values, HTML-escaping them where necessary.
+3. The browser receives ordinary HTML, not EJS syntax.
+For example, if organization_id = 3 and organization_name = "GreenHarvest Growers", the rendered HTML becomes:
+<a href="/organization/3">GreenHarvest Growers</a>
+Key distinction: EJS generates the HTML on the server. Express handles the subsequent HTTP request when the user clicks the link.
+Topic 3 of 4: Controllers
+Question 7: Can you paste the controller function that handles the organization details request, including the Express route definition that calls it?
+
+USER
+Well, that is a no brainer. It looks obvious and trivial at the same time so it didn't come to mind when you asked.
+
+const showOrganizationDetailsPage = async(req, res) => {
+    const organizationId = parseInt(req.params.id);
+    const organizationDetails = await getOrganizationDetails(organizationId);
+    const projects = await getProjectsByOrganizationId(organizationId);
+
+    //For debugging
+    if (NODE_ENV === 'development') {
+        console.log(organizationDetails)
+        projects.forEach(project => console.log(project));
+    };
+
+    const templateView = 'organization';
+    const title = 'ORGANIZATION DETAILS';
+
+    res.render(templateView, {title, organizationDetails, projects});
+}
+
+ASSISTANT
+Fair point. Sometimes the simplest operations are so familiar that they don't seem worth explaining.
+Your controller demonstrates a clear separation of responsibilities:
+- Controller: Extracts the route parameter and coordinates the request.
+- Model: Retrieves the organization and its projects.
+- View: Receives the data through res.render().
+One concern worth exploring is input validation.
+Question 8: Consider const organizationId = parseInt(req.params.id);
+What happens if someone visits /organization/abc instead of /organization/3, and how does your application currently handle that situation?
+
+USER
+express throws a 500 server error. I have designed by app to handle errors gracefully
+
+ASSISTANT
+That's possible, but there's an important distinction.
+parseInt('abc') returns NaN. It doesn't throw an error.
+A 500 error may occur later when your database query receives that invalid value. Express can then pass the error to your error-handling middleware.
+However, 400 Bad Request would be more appropriate because the client supplied an invalid ID.
+Topic 4 of 4: Error Handling
+Question 9: Can you paste your application's error-handling middleware, including how you handle 404 and 500 errors?
+
+USER
+/ Test route for 500 errors
+
+//Create route to CATCH all route 404 errors
+app.use((req, res, next) => {
+  const err = new Error('Page Not Found');
+  err.status = 404;
+  next(err);
+});
+
+//Global error handler
+app.use ((err, req, res, next) => {
+  //Log error details for debugging
+  console.error('Eror occurred:', err.messages);
+  console.error('Stack trace:', err.stack);
+
+  //Determine & set status and template
+  const status = err.status || 500;
+  const template = status === 404 ? '404' : '500';
+
+  //Prepare data for the template
+  const context = {
+    title: status === 404 ? 'Page Not Found' : 'Server',
+    message: err.messgae,
+    stack: err.stack
+  };
+  // render the appropriate template
+  res.status(status).render(`errors/${template}`, context)
+});
+
+ASSISTANT
+Your implementation demonstrates a good understanding of centralized error handling in Express.
+You've correctly used next(err), err.status || 500, separate 404 and 500 templates, and res.status().render().
+Three issues:
+1. err.messages should be err.message.
+2. err.messgae should be err.message.
+3. err.stack should generally not be exposed to users in production.
+Question 10: Why did you choose 500 as the fallback status instead of 404?
+
+USER
+I dont have any specific reason. I was told to use that.
+However, I think I was told to use that because, if the page is not found, then there must be a server error or the user has a malformed request as you have pointed out earlier, that the server cannot process.
+
+ASSISTANT
+Thanks for explaining your reasoning. There's one misconception worth correcting.
+A page not being found does not necessarily mean the server has encountered an error.
+400: invalid client request; 404: resource not found; 500: unexpected server problem.
+500 is the appropriate default for unexpected server errors when no specific HTTP status has been assigned. Your 404 middleware explicitly assigns err.status = 404.
+Question 11: Suppose your PostgreSQL database suddenly becomes unavailable while a user requests an organization's details. How would your controller and global error handler respond to that failure?
+
+USER
+I didn't quite explain that properly.
+What I was trying to say is that if the error isn't a page not found error, then it must be a server error.
+If PostgreSQL suddenly becomes unavailable, the user's request should throw a server error.
+
+ASSISTANT
+Your clarification makes sense, and you're correct about the PostgreSQL failure.
+Not every error other than 404 is a server error. For example, 400 and 403 are client-error responses.
+If PostgreSQL becomes unavailable:
+1. db.query() rejects its Promise.
+2. await causes the async controller to reject.
+3. In Express 5, the rejected Promise is automatically forwarded to the global error handler.
+4. Your middleware defaults to HTTP 500 and renders errors/500.
+In Express 4, explicit forwarding or an async wrapper is generally needed.
+Question 12: Which version of Express are you using—4 or 5?
+
+USER
+5.3.0
+
+ASSISTANT
+Since you're using Express 5.3.0, rejected Promises from async route handlers are automatically forwarded to your global error-handling middleware.
+We've covered Models, Views, Controllers and Error Handling.
+Final question: Are you satisfied with what we've covered, or is there anything you'd like to clarify before we conclude and generate your .txt transcript?
+
+USER
+I'd like to to ask about how I used absolute, relative, and root/relative paths in this week's project. I think I quite understand how they work but I know I don't fully understand. I don't understand how bash/linux experts me to use '/', './ to access files or directorys.
+
+ASSISTANT
+Understanding paths is important in Linux, Node.js, Express, and EJS.
+Linux filesystem paths and web URL paths are not interpreted in exactly the same way.
+Example project:
+/home/boy/projects/myapp/
+├── server.js
+├── package.json
+├── public/css/style.css
+├── views/index.ejs
+├── views/partials/header.ejs
+└── controllers/projectController.js
+Assume terminal is in /home/boy/projects/myapp.
+Linux paths:
+ / means filesystem root, e.g. /home/boy
+ ./ means current directory, e.g. ./server.js
+ ../ means parent directory
+ ~/ means home directory (shell expansion)
+ public/ is relative to current directory.
+./server.js and server.js refer to the same pathname, but executing a command can differ because Bash searches PATH.
+Web URL paths:
+ /organization/3 resolves from the website root, e.g. http://localhost:3000/organization/3.
+ organization/3 and ./organization/3 resolve relative to the current page's URL.
+Question 13: If your terminal is inside /home/boy/projects/myapp and you execute cd /public, where will Linux look, and why?
+
+USER
+at the root.
+My dilema stems from using when to use a slash to locate a file and whether or not to use a slash to locate a directory.
+
+ASSISTANT
+Correct. Linux will look for /public directly under the filesystem root.
+The slash is not determined by whether you're accessing a file or directory. It's determined by the path's location and structure.
+Assuming current directory /home/boy/projects/myapp:
+public: directory inside current directory
+public/: same directory, trailing slash explicitly indicates directory access
+./public: same directory, explicitly relative
+/public: directory under filesystem root
+public/style.css: file inside public
+./public/style.css: same file, explicitly relative
+/public/style.css: file under /public at filesystem root
+../public: directory public in parent directory
+Three rules:
+1. Leading / starts from filesystem root.
+2. ./ starts from current directory and is usually optional.
+3. / between names separates path components.
+cd public, cd ./public, cd public/, cd ./public/ are equivalent; cd /public is different.
+Question 14: Suppose you're inside /home/boy/projects/myapp and want to execute server.js with Node.js. Would both node server.js and node ./server.js work? Explain.
+
+USER
+That'll be all for today.
+
+ASSISTANT — SESSION CONCLUSION
+The session concluded at the user's request. All four required topics were discussed, followed by an additional discussion of Linux filesystem paths and web URL paths.
