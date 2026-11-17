@@ -1,4 +1,5 @@
-import { getAllCategories, getProjectsByCategoryId } from "../models/categories.js";
+import { getAllCategories } from "../models/categories.js";
+import { getProjectsByCategoryId } from "../models/projects.js";
 
 
 const showCategoriesPage = async (req, res) => {
@@ -13,10 +14,10 @@ const showCategoriesPage = async (req, res) => {
 
 const showCategoryDetailsPage = async (req, res) => {
     const templateView = 'category';
-    const title = 'CATEGORY DETAILS';
     const categoryId = parseInt(req.params.id);
     const categoryDetails = await getProjectsByCategoryId(categoryId);
-
+    const title = `CATEGORY DETAILS`;
+    
     if (process.env.NODE_ENV == 'development') {
         console.log(categoryDetails);
     }

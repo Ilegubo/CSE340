@@ -38,7 +38,7 @@ const getProjectsByOrganizationId = async(organizationId) => {
 const getProjectDetails = async(projectId) => {
     const query = `
     SELECT projects.project_id, projects.organization_id, projects.title, projects.description, projects.location, TO_CHAR(date, 'Dy DD Mon YYYY') AS date,
-    categories.name AS category, organization.name AS organization_name
+    categories.name AS category_name, categories.category_id, organization.name AS organization_name
     FROM projects JOIN project_categories ON projects.project_id = project_categories.project_id
 	JOIN categories ON project_categories.category_id = categories.category_id
 	JOIN organization ON projects.organization_id = organization.organization_id
@@ -49,4 +49,19 @@ const getProjectDetails = async(projectId) => {
     return result.rows;
 };
 
-export {getAllProjects, getUpcomingProjects, getProjectsByOrganizationId, getProjectDetails};
+const getProjectsByCategoryId = async(categoryId) => {
+    const query =   `SELECT categories.name AS category_name, projects.title, projects.project_id
+        FROM categories
+        JOIN project_categories
+        ON categories.category_id = project_categories.category_id
+        JOIN projects
+        ON projects.project_id = project_categories.project_id
+        WHERE categories.category_id = $1;`;
+
+    const queryParam = [categoryId];
+    const result = await db.query(query, queryParam);
+
+    return result.rows;
+};
+
+export {getAllProjects, getUpcomingProjects, getProjectsByOrganizationId, getProjectDetails, getProjectsByCategoryId};
