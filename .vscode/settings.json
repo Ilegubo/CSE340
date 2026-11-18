@@ -15,6 +15,9 @@
         "*/src/controller/projects.js": "proJS",
         "*/src/controller/organizations.js": "orgJs",
         "*/src/views/projects.ejs": "pS",
-        "*/src/views/organizations.ejs": "oS"
+        "*/src/views/organizations.ejs": "oS",
+        "*/src/views/new-organization.ejs": "n-o",
+        "*/src/models/organization.js": "org",
+        "*/server.js": "server"
     }
 }

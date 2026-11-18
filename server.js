@@ -41,6 +41,10 @@ app.use((req, res, next) => {
   }
 );
 
+// Allow Express to receive and process common POST data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+
 app.use(router);
 
 // Test route for 500 errors
@@ -73,7 +77,7 @@ app.use ((err, req, res, next) => {
 
 
 app.listen(PORT, HOST, async () => {
-  process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
+  // process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
 
   try {
     await testConnection();
