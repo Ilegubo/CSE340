@@ -7,9 +7,9 @@
         <p>Explore service opportunities by the kind of work that matters to you.</p>
         <ul class="category-list">
             <% categories.forEach(category=> { %>
-                <a href="./category/<%= category.category_id %>">
-                    <li class="category-card--<%= category.name.toLowerCase() %>"><%= category.name %></li>
-                </a>
+                <li class="category-card--<%= category.name.toLowerCase() %>">
+                    <a href="/category/<%= category.category_id %>"><%= category.name %></a>
+                </li>
                 <%})%>
         </ul>
     </main>

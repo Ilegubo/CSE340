@@ -1,29 +1,30 @@
 <%- include('partials/header') %>
-<main>
-    <section>
+<main id="main-content" tabindex="-1">
+    <section aria-labelledby="organization-name">
         <div class="organization-details-intro">
-            <h2><%= organizationDetails.name %></h2>
-            <img src="/images/<%= organizationDetails.logo_filename %>" alt="<%= organizationDetails.name %> logo">
-            <span><%= organizationDetails.description %></span>
+            <img src="/images/<%= organizationDetails.logo_filename %>" alt="<%= organizationDetails.name %> logo" width="80" height="80">
+            <div>
+                <h1 id="organization-name"><%= organizationDetails.name %></h1>
+                <p><%= organizationDetails.description %></p>
+            </div>
         </div>
     </section>
-    <section>
-        <h3>Service Projects</h3>
+    <section aria-labelledby="service-projects-heading">
+        <h2 id="service-projects-heading">Service Projects</h2>
         <!-- <a class="details-link" href="javascript:history.back()">&larr; Go Back</a> -->
-    <br>
-    <ul class="project-list">
-        <% projects.forEach(project => { %>
-            <li>
-                <div class="project-meta">
-                    <time datetime="<%= project.date %>"><%= project.date %></time>
-                    <span><%= project.location %></span>
-                </div>
-                <h2><%= project.title %></h2>
-                <p><%= project.description %></p>
-                <p class="category-card--<%= project.category.toLowerCase() %>"><%= project.category %></p>                
-            </li>
-        <% }) %>
-    </ul>
+        <ul class="project-list">
+            <% projects.forEach(project => { %>
+                <li>
+                    <div class="project-meta">
+                        <time datetime="<%= project.date %>"><%= project.date %></time>
+                        <span><%= project.location %></span>
+                    </div>
+                    <h2><%= project.title %></h2>
+                    <p><%= project.description %></p>
+                    <p class="category-card--<%= project.category.toLowerCase() %>"><%= project.category %></p>
+                </li>
+            <% }) %>
+        </ul>
     </section>    
 </main>
 <%- include('partials/footer') %>

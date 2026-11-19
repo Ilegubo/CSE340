@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %> | CSE 340 Service Network</title>
     <link rel="stylesheet" href="/css/main.css">
-    <% if (title === 'Add New Organization') {%>
+    <% if (title.toUpperCase() === 'ADD NEW ORGANIZATION') { %>
         <link rel="stylesheet" href="/css/form.css">
-        <% }%> 
+    <% } %>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
-    <nav class="site-nav" aria-label="Primary">
-        <a class="site-brand" href="/">CSE 340<br>Service Network</a>
-        <ul>
-            <li><a href="/" <% if (title === 'HOME') { %>aria-current="page"<% } %>>Home</a></li>
-            <li><a href="/organizations" <% if (title.includes("ORGANIZATION")) { %>aria-current="page"<% } %>>Organizations</a></li>
-            <li><a href="/projects" <% if (title.includes("PROJECT")) { %>aria-current="page"<% } %>>Projects</a></li>
-            <li><a href="/categories" <% if (title.includes('CATEGOR')) { %>aria-current="page"<% } %>>Categories</a></li>
-        </ul>
-    </nav>
+        <% const navTitle = title.toUpperCase(); %>
+        <nav class="site-nav" aria-label="Primary">
+            <a class="site-brand" href="/">CSE 340<br>Service Network</a>
+            <ul>
+                <li><a href="/" <% if (navTitle === 'HOME') { %>aria-current="page"<% } %>>Home</a></li>
+                <li><a href="/organizations" <% if (navTitle.includes('ORGANIZATION')) { %>aria-current="page"<% } %>>Organizations</a></li>
+                <li><a href="/projects" <% if (navTitle.includes('PROJECT')) { %>aria-current="page"<% } %>>Projects</a></li>
+                <li><a href="/categories" <% if (navTitle.includes('CATEGOR')) { %>aria-current="page"<% } %>>Categories</a></li>
+            </ul>
+        </nav>
+        <% const messages = flash(); %>
+        <% Object.keys(messages).forEach(type => { %>
+            <% if (messages[type].length > 0) { %>
+                <div class="alert <%= type %>"
+                    role="<%= type === 'error' ? 'alert' : 'status' %>"
+                    aria-live="<%= type === 'error' ? 'assertive' : 'polite' %>"
+                    aria-atomic="true">
+                    <% messages[type].forEach(msg => { %>
+                        <p><%= msg %></p>
+                    <% }); %>
+                </div>
+            <% } %>
+        <% }); %>
     </header>
-    <% const messages = flash(); %>
-    <% Object.keys(messages).forEach(type => { %>
-        <% if (messages[type].length > 0) { %>
-            <div class="alert <%= type %>">
-                <% messages[type].forEach(msg => { %>
-                    <p><%= msg %></p>
-                <% }); %>
-            </div>
-        <% } %>
-    <% }); %>

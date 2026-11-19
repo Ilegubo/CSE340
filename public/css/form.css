@@ -1,62 +1,65 @@
 
-:root {
-    --blue-grey: hsl(234, 20%, 30%);
+.organization-form {
+    width: min(100%, 640px);
+    padding: clamp(20px, 4vw, 32px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
 }
 
-/* * {
-    box-sizing: border-box;
+.organization-form .form-group {
+    margin-bottom: 20px;
 }
 
-html {
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-}
-
-body {
-    width: 80%;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
-
-h1 {
-    color: var(--blue-grey);
-    display: inline;
-}
-
-label {
+.organization-form label {
     display: block;
-    font-size: .8rem;
-    color: purple;
-    padding-top: .2rem;
+    margin-bottom: 6px;
+    color: var(--color-primary);
+    font-size: 15px;
+    font-weight: 700;
 }
 
-input[type=text] {
+.organization-form input,
+.organization-form textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
     display: block;
-    margin: .1rem 0 1rem 0;
-    padding: .3rem;
-    border: 1px solid hsl(0, 0%, 60%);
-    border-radius: 4px;
-    border-left-width: 5px;
-    border-left-color: #555;
-    font-size: 1rem;
-    color: #3D405B;
-    width: 250px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
 }
 
-input:focus {
-    border-left-color: black;
-    outline: none;
+.organization-form textarea {
+    min-height: 140px;
+    resize: vertical;
 }
 
-input:-webkit-autofill {
-    -webkit-text-fill-color: #3D405B;
+.organization-form input:focus-visible,
+.organization-form textarea:focus-visible,
+.organization-form button:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
 }
 
-textarea {
-    width: 15.6rem;
+.organization-form button {
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid var(--color-primary);
+    border-radius: 6px;
+    background: var(--color-primary);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.organization-form button:hover {
+    background: #102f43;
+}
+
+.organization-form button:active {
+    background: #0c2636;
 }

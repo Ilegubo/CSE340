@@ -91,7 +91,7 @@ app.use ((err, req, res, next) => {
 
 
 app.listen(PORT, HOST, async () => {
-  // process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
+  process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
 
   try {
     await testConnection();
@@ -103,7 +103,7 @@ app.listen(PORT, HOST, async () => {
       
 
     console.log('='.repeat(42));
-    console.log(`Server is running at http://localhost:${PORT}`);
+    // console.log(`Server is running at http://localhost:${PORT}`);
     console.log(`Server is running at http://${localIP}:${PORT}`);
     console.log(`Environment: ${NODE_ENV}`);
     console.log('='.repeat(42));
